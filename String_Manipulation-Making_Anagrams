@@ -1,0 +1,54 @@
+import java.io.*;
+import java.math.*;
+import java.security.*;
+import java.text.*;
+import java.util.*;
+import java.util.concurrent.*;
+import java.util.regex.*;
+
+public class Solution 
+{
+    static int makeAnagram(String a, String b) 
+    {
+        int aLen = a.length;
+	int bLen = b.length;
+	int upper = aLen < bLen ? aLen : bLen;
+	String smStr = aLen < bLen ? a : b;
+	String lgStr = aLen < bLen ? b : a;
+
+	//delete repeating characters
+	for (int i = 0; i < upper; i++)
+	{
+	    char curChar = smStr.charAt(i);
+
+	    if (lgStr.contains(curChar))
+	    {
+	        smStr.replaceFirst(curChar);
+		lgStr.replaceFirst(charCur);
+	    }    
+	}
+
+	return smStr.length() + lgStr.length(); 
+    }
+
+    private static final Scanner scanner = new Scanner(System.in);
+
+    public static void main(String[] args) throws IOException 
+    {
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System.getenv("OUTPUT_PATH")));
+
+        String a = scanner.nextLine();
+
+        String b = scanner.nextLine();
+
+        int res = makeAnagram(a, b);
+
+        bufferedWriter.write(String.valueOf(res));
+        bufferedWriter.newLine();
+
+        bufferedWriter.close();
+
+        scanner.close();
+    }
+}
+
