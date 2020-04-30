@@ -6,34 +6,42 @@ import java.util.*;
 import java.util.concurrent.*;
 import java.util.regex.*;
 
-public class Solution 
+public class Solution
 {
-    static int makeAnagram(String a, String b) 
+    // Complete the makeAnagram function below.
+    static int makeAnagram(String a, String b)
     {
-        int aLen = a.length;
-	int bLen = b.length;
-	int upper = aLen < bLen ? aLen : bLen;
-	String smStr = aLen < bLen ? a : b;
-	String lgStr = aLen < bLen ? b : a;
+        final int NUM_LETTERS = 26;
+        final int LOW_A_ASCII = 97;
+        int count[] = new int[NUM_LETTERS];
 
-	//delete repeating characters
-	for (int i = 0; i < upper; i++)
-	{
-	    char curChar = smStr.charAt(i);
+        //add one for occurences for string a
+        int aLen = a.length();
+        for (int i = 0; i < aLen; i++)
+        {
+            count[a.charAt(i) - LOW_A_ASCII] += 1;
+        }
 
-	    if (lgStr.contains(curChar))
-	    {
-	        smStr.replaceFirst(curChar);
-		lgStr.replaceFirst(charCur);
-	    }    
-	}
+        //subtract one for occurences for string b
+        int bLen = b.length();
+        for (int i = 0; i < bLen; i++)
+        {
+            count[b.charAt(i) - LOW_A_ASCII] -= 1;
+        }
 
-	return smStr.length() + lgStr.length(); 
+        //count deletions
+        int deletions = 0;
+        for (int i = 0; i < NUM_LETTERS; i++)
+        {
+            deletions += Math.abs(count[i]);
+        }
+
+        return deletions;
     }
-
+    
     private static final Scanner scanner = new Scanner(System.in);
 
-    public static void main(String[] args) throws IOException 
+    public static void main(String[] args) throws IOException
     {
         BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System.getenv("OUTPUT_PATH")));
 
